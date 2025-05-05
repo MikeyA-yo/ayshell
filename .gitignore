@@ -1,0 +1,19 @@
+*.exe*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Go workspace file
+go.work.sum
+
+# Debug files
+debug/
+
+# Output of the go coverage tool
+*.coverprofile
+
+# Dependency directories
+vendor/
