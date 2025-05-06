@@ -17,3 +17,4 @@ debug/
 
 # Dependency directories
 vendor/
+*.exe
