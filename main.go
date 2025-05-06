@@ -13,7 +13,6 @@ func main() {
 	defer line.Close()
 	InitCommands()
 	executor.SetBuiltins(commandList)
-	line.SetCtrlCAborts(true)
 
 	completer := NewCompleter()
 
@@ -61,19 +60,12 @@ func main() {
 			break
 		}
 
-		cmdName := strings.Fields(input)[0]
-		if cmd, exists := GetCommand(cmdName); exists {
-			if cmd.Execute != nil {
-				args := strings.Fields(input)[1:]
-				if err := cmd.Execute(args); err != nil {
-					fmt.Printf("Error: %v\n", err)
-				}
-			} else {
-				fmt.Printf("Command '%s' not implemented yet\n", cmdName)
-			}
-		} else {
+		// Use the executor to handle both built-in and system commands
+		if err := executor.Execute(input); err != nil {
+			// If command not found, try to suggest a similar built-in command
+			cmdName := strings.Fields(input)[0]
 			suggestion := completer.Suggest(cmdName)
-			fmt.Printf("Unknown command: '%s'\n", cmdName)
+			fmt.Printf("Error: %v\n", err)
 			if suggestion != "" {
 				fmt.Printf("Did you mean: '%s'?\n", suggestion)
 			}
