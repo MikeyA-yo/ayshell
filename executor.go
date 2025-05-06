@@ -28,7 +28,8 @@ func (e *CommandExecutor) SetBuiltins(cmds map[string]Command) {
 }
 
 func (e *CommandExecutor) Execute(input string) error {
-	args := strings.Fields(input)
+	// Parse input respecting quotes
+	args := parseCommandWithQuotes(input)
 	if len(args) == 0 {
 		return nil
 	}
@@ -50,8 +51,16 @@ func (e *CommandExecutor) Execute(input string) error {
 func (e *CommandExecutor) executeSystem(args []string) error {
 	// Check if the command exists in PATH
 	cmdPath, err := exec.LookPath(args[0])
+	ayshPrint := `
+     █████╗ ██╗   ██╗    ███████╗██╗  ██╗███████╗██╗     ██╗     
+	██╔══██╗╚██╗ ██╔╝    ██╔════╝██║  ██║██╔════╝██║     ██║     
+	███████║ ╚████╔╝     ███████╗███████║█████╗  ██║     ██║     
+	██╔══██║  ╚██╔╝      ╚════██║██╔══██║██╔══╝  ██║     ██║     
+	██║  ██║   ██║       ███████║██║  ██║███████╗███████╗███████╗
+	╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+	`
 	if err != nil {
-		return fmt.Errorf("command not found: %s", args[0])
+		return fmt.Errorf("%v\ncommand not found: %s", ayshPrint, args[0])
 	}
 
 	cmd := exec.Command(cmdPath, args[1:]...)
