@@ -59,6 +59,11 @@ func InitCommands() {
 			Description: "Exit the shell",
 			Execute:     executor.ExitShell,
 		},
+		"mv": {
+			Name:        "mv",
+			Description: "Move or rename files and directories",
+			Execute:     executor.Move,
+		},
 	}
 }
 

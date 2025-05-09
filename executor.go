@@ -202,6 +202,20 @@ func (e *CommandExecutor) Mkdir(args []string) error {
 	return nil
 }
 
+func (e *CommandExecutor) Move(args []string) error {
+	if len(args) < 2 {
+		return fmt.Errorf("mv: missing destination file operand after '%s'", args[0])
+	}
+	source := args[0]
+	destination := args[1]
+
+	err := os.Rename(source, destination)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (e *CommandExecutor) Rm(args []string) error {
 	if len(args) == 0 {
 		return fmt.Errorf("rm: missing file operand")
