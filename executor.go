@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -14,9 +15,15 @@ type CommandExecutor struct {
 }
 
 func NewCommandExecutor() *CommandExecutor {
+	shell := ""
+	if runtime.GOOS == "windows" {
+		shell = "powershell.exe"
+	} else {
+		shell = "/bin/sh"
+	}
 	executor := &CommandExecutor{
 		builtins: nil, // Will be set after InitCommands
-		shell:    "cmd.exe",
+		shell:    shell,
 	}
 	return executor
 }
