@@ -204,6 +204,9 @@ func (e *CommandExecutor) Mkdir(args []string) error {
 
 func (e *CommandExecutor) Move(args []string) error {
 	if len(args) < 2 {
+		if len(args) == 0 {
+			return fmt.Errorf("mv: missing file operand")
+		}
 		return fmt.Errorf("mv: missing destination file operand after '%s'", args[0])
 	}
 	source := args[0]
