@@ -14,7 +14,8 @@ debug/
 
 # Output of the go coverage tool
 *.coverprofile
-
+./aysh
+bin/
 # Dependency directories
 vendor/
 *.exe

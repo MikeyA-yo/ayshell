@@ -1,4 +1,4 @@
-module aysh
+module github.com/MikeyA-yo/ayshell
 
 go 1.23.2
 
